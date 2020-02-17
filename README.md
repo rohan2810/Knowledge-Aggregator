@@ -1,3 +1,3 @@
    # Knowledge-Aggregator
-Build knowledge through Crowdsourcing
+Building knowledge through Crowdsourcing
 
