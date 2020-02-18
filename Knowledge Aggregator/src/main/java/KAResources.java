@@ -1,30 +1,41 @@
 // Import Restlet Methods and Resources
+import org.json.JSONObject;
+import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
+import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 // Import Driver for Postgres Connection
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;;
+import java.io.IOException;
+import java.rmi.server.ExportException;
+import java.sql.*;
+;
 
 // Import Gson for Json Objects
 import com.google.gson.*;
 
-public class KAResources extends ServerResource
-{
-    @Get
-    public String hello()
-    {
-        String postgreUser = "postgres";
-        String postgrePwd = "1234";
-        String postgreDatabase = "ka";
+public class KAResources extends ServerResource {
 
-        String connection = "jdbc:postgresql://localhost:5432/" + postgreDatabase + "?user=" + postgreUser +
-                            "&password=" + postgrePwd;
+    String postgreUser = "postgres";
+    String postgrePwd = "1234";
+    String postgreDatabase = "ka";
+    String connection = "jdbc:postgresql://localhost:5432/" + postgreDatabase + "?user=" + postgreUser +
+            "&password=" + postgrePwd;
+    Connection c;
+
+    @Get
+    public String get_object() {
+
+//        String postgreUser = "postgres";
+//        String postgrePwd = "1234";
+//        String postgreDatabase = "ka";
+//
+//        String connection = "jdbc:postgresql://localhost:5432/" + postgreDatabase + "?user=" + postgreUser +
+//                            "&password=" + postgrePwd;
         String getquery =  "SELECT * FROM public.\"Object\";";
-        Connection c;
+//        Connection c;
         JsonArray object_array = new JsonArray();
 
         try {
@@ -62,6 +73,37 @@ public class KAResources extends ServerResource
         }
 
         return object_array.toString();
+    }
+
+    @Post
+    public String post_object(Representation representation) throws IOException{
+
+        JsonRepresentation jsonRepresentation = new JsonRepresentation(representation);
+        JSONObject jsonObject = jsonRepresentation.getJsonObject();
+
+        String query = "INSERT INTO public.\"Object\" VALUES ('" + jsonObject.getString("ID") + "','" +
+                        jsonObject.getString("Name") + "','" + jsonObject.getString("Type") +
+                        "','" + jsonObject.getString("Description") + "')";
+
+        try {
+
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(connection);
+            PreparedStatement pstmt = c.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                return "Error Inserting Data";
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(e);
+            return "Error!";
+
+        }
+
+        return "Successfully Inserted";
+
     }
 
     @Delete
