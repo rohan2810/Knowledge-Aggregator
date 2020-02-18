@@ -1,3 +1,4 @@
+package api;
 import java.io.Serializable;
 
 public class Object implements Serializable {

@@ -1,4 +1,5 @@
 // Import Restlet Methods and Resources
+package api;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -11,7 +12,7 @@ import org.restlet.resource.ServerResource;
 import java.io.IOException;
 import java.rmi.server.ExportException;
 import java.sql.*;
-;
+
 
 // Import Gson for Json Objects
 import com.google.gson.*;
@@ -24,7 +25,10 @@ public class KAResources extends ServerResource {
     String connection = "jdbc:postgresql://localhost:5432/" + postgreDatabase + "?user=" + postgreUser +
             "&password=" + postgrePwd;
     Connection c;
-
+    @Get
+    public String pingcheck(){
+        return "API is up and running";
+    }
     @Get
     public String get_object() {
 
