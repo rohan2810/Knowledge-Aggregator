@@ -24,7 +24,9 @@ public class KAServer extends Application
     public Restlet createInboundRoot()
     {
         Router router = new Router(getContext()) ;
-        router.attach( "/", KAResources.class ) ;
+        router.attach( "/objects", KAResources.class ) ;
+        router.attach( "/object/{id}", KAResources.class ) ;
+        router.attach( "/object", KAResources.class ) ;
         router.attach( "/feedback", KAResources.class ) ;
 
         return router;
