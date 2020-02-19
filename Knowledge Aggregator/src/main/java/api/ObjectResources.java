@@ -18,7 +18,7 @@ import java.sql.*;
 // Import Gson for Json Objects
 import com.google.gson.*;
 
-public class KAResources extends ServerResource {
+public class ObjectResources extends ServerResource {
 
     String postgreUser = "postgres";
     String postgrePwd = "1234";
