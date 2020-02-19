@@ -31,6 +31,8 @@ public class KAServer extends Application
         router.attach( "/user/{id}", UserResources.class ) ;
         router.attach( "/user", UserResources.class ) ;
         router.attach( "/feedback", ObjectResources.class ) ;
+        router.attach( "/knowledge/{id}", KnowledgeResource.class ) ;
+        router.attach( "/knowledge", KnowledgeResource.class ) ;
 
         return router;
     }
