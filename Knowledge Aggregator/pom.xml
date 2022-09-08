@@ -18,7 +18,7 @@
 
     <properties>
         <restlet-version>2.4.2</restlet-version>
-        <postgres-version>42.2.1</postgres-version>
+        <postgres-version>42.4.1</postgres-version>
         <maven.compiler.source>1.13</maven.compiler.source>
         <maven.compiler.target>1.13</maven.compiler.target>
     </properties>
